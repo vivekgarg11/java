@@ -139,6 +139,42 @@ public class Entity {
 		}
 	}
 
+	public void generateParticle(Entity generator, Entity target) {
+		Color color = generator.getParticleColor();
+		int size = generator.getParticleSize();
+		int speed = generator.getParticleSpeed();
+		int maxLife = generator.getParticleMaxLife();
+
+		Particle p1 = new Particle(gp, generator, color, size, speed, maxLife, -2, -1);
+		Particle p2 = new Particle(gp, generator, color, size, speed, maxLife, 2, -1);
+		Particle p3 = new Particle(gp, generator, color, size, speed, maxLife, -2, 1);
+		Particle p4 = new Particle(gp, generator, color, size, speed, maxLife, 2, 1);
+		gp.particleList.add(p1);
+		gp.particleList.add(p2);
+		gp.particleList.add(p3);
+		gp.particleList.add(p4);
+	}
+
+	public Color getParticleColor() {
+		Color color = null;
+		return color;
+	}
+
+	public int getParticleSize() {
+		int size = 0;
+		return size;
+	}
+
+	public int getParticleSpeed() {
+		int speed = 0;
+		return speed;
+	}
+
+	public int getParticleMaxLife() {
+		int maxLife = 0;
+		return maxLife;
+	}
+
 	public void update() {
 
 		setAction();
@@ -248,40 +284,39 @@ public class Entity {
 					image = right2;
 				break;
 			}
-		}
+			// Monster HP Bar
+			if (type == 2 && hpBarOn == true) {
 
-		// Monster HP Bar
-		if (type == 2 && hpBarOn == true) {
+				double oneScale = (double) gp.tileSize / maxLife;
+				double hpBarValue = oneScale * life;
 
-			double oneScale = (double) gp.tileSize / maxLife;
-			double hpBarValue = oneScale * life;
+				g2.setColor(new Color(35, 35, 35));
+				g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
 
-			g2.setColor(new Color(35, 35, 35));
-			g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
+				g2.setColor(new Color(255, 0, 30));
+				g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
 
-			g2.setColor(new Color(255, 0, 30));
-			g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
+				hpBarCounter++;
 
-			hpBarCounter++;
-
-			if (hpBarCounter > 600) {
-				hpBarCounter = 0;
-				hpBarOn = false;
+				if (hpBarCounter > 600) {
+					hpBarCounter = 0;
+					hpBarOn = false;
+				}
 			}
-		}
 
-		if (invincible == true) {
-			hpBarOn = true;
-			hpBarCounter = 0;
-			changeAlpha(g2, 0.4f);
-		}
-		if (dying == true) {
-			dyingAnimation(g2);
-		}
+			if (invincible == true) {
+				hpBarOn = true;
+				hpBarCounter = 0;
+				changeAlpha(g2, 0.4f);
+			}
+			if (dying == true) {
+				dyingAnimation(g2);
+			}
 
-		g2.drawImage(image, screenX, screenY, null);
+			g2.drawImage(image, screenX, screenY, null);
 
-		changeAlpha(g2, 1f);
+			changeAlpha(g2, 1f);
+		}
 	}
 
 	public void dyingAnimation(Graphics2D g2) {
