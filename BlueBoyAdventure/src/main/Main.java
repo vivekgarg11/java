@@ -13,10 +13,14 @@ public class Main {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		window.setTitle("2D Adventure");
-//		window.setUndecorated(true);
 
 		GamePanel gamepanel = new GamePanel();
 		window.add(gamepanel);
+
+		gamepanel.config.loadConfig();
+		if (gamepanel.fullScreenOn == true) {
+			window.setUndecorated(true);
+		}
 
 		window.pack();
 
