@@ -7,10 +7,10 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 import main.KeyHandler;
-import object.OBJ_Axe;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
+import object.OBJ_Sword_Normal;
 
 public class Player extends Entity {
 
@@ -67,8 +67,8 @@ public class Player extends Entity {
 		exp = 0;
 		nextLevelExp = 5;
 		coin = 500;
-		currentWeapon = new OBJ_Axe(gp);
-//		currentWeapon = new OBJ_Sword_Normal(gp);
+//		currentWeapon = new OBJ_Axe(gp);
+		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
 		projectile = new OBJ_Fireball(gp);
 //		projectile = new OBJ_Rock(gp);
@@ -229,7 +229,15 @@ public class Player extends Entity {
 			projectile.subtractResource(this);
 
 			// ADD IT TO THE LIST
-			gp.projectileList.add(projectile);
+
+			// CHECK VACANCY
+			for (int i = 0; i < gp.projectileList[1].length; i++) {
+				if (gp.projectileList[gp.currentMap][i] == null) {
+					gp.projectileList[gp.currentMap][i] = projectile;
+					break;
+				}
+			}
+
 			shotAvailableCounter = 0;
 			gp.playSE(10);
 		}
@@ -301,6 +309,9 @@ public class Player extends Entity {
 
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 			damageInteractiveTile(iTileIndex);
+
+			int projectileIndex = gp.cChecker.checkEntity(this, gp.projectileList);
+			damageProjectile(projectileIndex);
 
 			// After collision restoring original data
 			worldX = currentWorldX;
@@ -409,6 +420,14 @@ public class Player extends Entity {
 			if (gp.iTile[gp.currentMap][i].life == 0) {
 				gp.iTile[gp.currentMap][i] = gp.iTile[gp.currentMap][i].getDestroyedForm();
 			}
+		}
+	}
+
+	public void damageProjectile(int i) {
+		if (i != 999) {
+			Entity projectile = gp.projectileList[gp.currentMap][i];
+			projectile.alive = false;
+			generateParticle(projectile, projectile);
 		}
 	}
 
