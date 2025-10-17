@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Axe;
 import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
@@ -93,6 +94,7 @@ public class Player extends Entity {
 		inventory.clear();
 		inventory.add(currentWeapon);
 		inventory.add(currentShield);
+		inventory.add(new OBJ_Axe(gp));
 		inventory.add(new OBJ_Key(gp));
 	}
 
@@ -337,6 +339,14 @@ public class Player extends Entity {
 				gp.obj[gp.currentMap][i] = null;
 			}
 
+			// OBSTACLE
+			else if (gp.obj[gp.currentMap][i].type == type_obstacle) {
+				if (keyH.enterPressed == true) {
+					attackCanceled = true;
+					gp.obj[gp.currentMap][i].interact();
+				}
+			}
+
 			// INVENTORY ITEMS
 			else {
 				String text;
@@ -472,8 +482,9 @@ public class Player extends Entity {
 				defence = getDefence();
 			}
 			if (selectedItem.type == type_consumable) {
-				selectedItem.use(this);
-				inventory.remove(itemIndex);
+				if (selectedItem.use(this) == true) {
+					inventory.remove(itemIndex);
+				}
 			}
 		}
 	}
