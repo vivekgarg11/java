@@ -11,7 +11,7 @@ public class NPC_OldMan extends Entity {
 		super(gp);
 
 		direction = "down";
-		speed = 1;
+		speed = 2;
 
 		solidArea = new Rectangle();
 		solidArea.x = 8;
@@ -45,26 +45,37 @@ public class NPC_OldMan extends Entity {
 	}
 
 	public void setAction() {
+		if (onPath == true) {
 
-		actionLockCounter++;
-		if (actionLockCounter == 120) {
-			Random random = new Random();
+			// Path to a certain Goal
+//			int goalCol = 12;
+//			int goalRow = 9;
 
-			int i = random.nextInt(100) + 1;
+			// NPC follows player
+			int goalCol = (gp.player.worldX + gp.player.solidArea.x) / gp.tileSize;
+			int goalRow = (gp.player.worldY + gp.player.solidArea.y) / gp.tileSize;
+			searchPath(goalCol, goalRow);
+		} else {
+			actionLockCounter++;
+			if (actionLockCounter == 120) {
+				Random random = new Random();
 
-			if (i <= 25) {
-				direction = "up";
+				int i = random.nextInt(100) + 1;
+
+				if (i <= 25) {
+					direction = "up";
+				}
+				if (i > 25 && i <= 50) {
+					direction = "down";
+				}
+				if (i > 50 && i <= 75) {
+					direction = "left";
+				}
+				if (i > 75 && i <= 100) {
+					direction = "right";
+				}
+				actionLockCounter = 0;
 			}
-			if (i > 25 && i <= 50) {
-				direction = "down";
-			}
-			if (i > 50 && i <= 75) {
-				direction = "left";
-			}
-			if (i > 75 && i <= 100) {
-				direction = "right";
-			}
-			actionLockCounter = 0;
 		}
 
 	}
@@ -72,6 +83,7 @@ public class NPC_OldMan extends Entity {
 	public void speak() {
 
 		super.speak();
+		onPath = true;
 	}
 
 }
