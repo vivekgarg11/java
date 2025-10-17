@@ -64,8 +64,8 @@ public class AssetSetter {
 
 		// MAP 0
 		gp.npc[mapNum][i] = new NPC_OldMan(gp);
-		gp.npc[mapNum][i].worldX = gp.tileSize * 24;
-		gp.npc[mapNum][i].worldY = gp.tileSize * 36;
+		gp.npc[mapNum][i].worldX = gp.tileSize * 22;
+		gp.npc[mapNum][i].worldY = gp.tileSize * 16;
 		i++;
 		// MAP 1
 		mapNum = 1;
