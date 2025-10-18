@@ -74,6 +74,12 @@ public class KeyHandler implements KeyListener {
 
 		}
 
+		// GAME OVER STATE
+		else if (gp.gameState == gp.mapState) {
+			mapState(code);
+
+		}
+
 	}
 
 	public void titleState(int code) {
@@ -169,6 +175,16 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_ESCAPE) {
 			gp.gameState = gp.optionsState;
+		}
+		if (code == KeyEvent.VK_M) {
+			gp.gameState = gp.mapState;
+		}
+		if (code == KeyEvent.VK_X) {
+			if (gp.map.miniMapOn == false) {
+				gp.map.miniMapOn = true;
+			} else {
+				gp.map.miniMapOn = false;
+			}
 		}
 
 		// DEBUG
@@ -336,6 +352,12 @@ public class KeyHandler implements KeyListener {
 			if (code == KeyEvent.VK_ESCAPE) {
 				gp.ui.subState = 0;
 			}
+		}
+	}
+
+	public void mapState(int code) {
+		if (code == KeyEvent.VK_M) {
+			gp.gameState = gp.playState;
 		}
 	}
 
