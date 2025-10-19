@@ -43,10 +43,6 @@ public class Player extends Entity {
 //		attackArea.height = 36;
 
 		setDefaultValues();
-		getImage();
-		getAttackImage();
-		getGuardImage();
-		setItems();
 	}
 
 	public void setDefaultValues() {
@@ -71,13 +67,17 @@ public class Player extends Entity {
 		exp = 0;
 		nextLevelExp = 5;
 		coin = 500;
-//		currentWeapon = new OBJ_Axe(gp);
 		currentWeapon = new OBJ_Sword_Normal(gp);
 		currentShield = new OBJ_Shield_Wood(gp);
+		currentLight = null;
 		projectile = new OBJ_Fireball(gp);
-//		projectile = new OBJ_Rock(gp);
 		attack = getAttack();
 		defence = getDefence();
+
+		getImage();
+		getAttackImage();
+		getGuardImage();
+		setItems();
 	}
 
 	public void setDefaultPositions() {
@@ -86,11 +86,15 @@ public class Player extends Entity {
 		direction = "down";
 	}
 
-	public void restoreLifeAndMana() {
+	public void restoreStatus() {
 		life = maxLife;
 		mana = maxMana;
 		invincible = false;
 		transparent = false;
+		attacking = false;
+		guarding = false;
+		knockBack = false;
+		lightUpdated = true;
 	}
 
 	public void setItems() {
@@ -338,12 +342,12 @@ public class Player extends Entity {
 		if (mana > maxMana) {
 			mana = maxMana;
 		}
-//		if (life <= 0) {
-//			gp.gameState = gp.gameOverState;
-//			gp.ui.commandNum=-1;
-//			gp.stopmusic();
-//			gp.playSE(12);
-//		}
+		if (life <= 0) {
+			gp.gameState = gp.gameOverState;
+			gp.ui.commandNum = -1;
+			gp.stopmusic();
+			gp.playSE(12);
+		}
 	}
 
 	public void pickUpObject(int i) {
