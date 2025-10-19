@@ -83,6 +83,11 @@ public class Lighting {
 		g2.dispose();
 	}
 
+	public void resetDay() {
+		dayState = day;
+		filterAlpha = 0f;
+	}
+
 	public void update() {
 		if (gp.player.lightUpdated == true) {
 			setLightSource();
@@ -109,7 +114,7 @@ public class Lighting {
 		}
 		if (dayState == night) {
 			dayCounter++;
-			if (dayCounter > 360000) {
+			if (dayCounter > 36000) {
 				dayState = dawn;
 				dayCounter = 0;
 			}
