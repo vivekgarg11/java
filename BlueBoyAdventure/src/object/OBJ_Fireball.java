@@ -7,6 +7,7 @@ import entity.Projectile;
 import main.GamePanel;
 
 public class OBJ_Fireball extends Projectile {
+	public static final String objName = "Fireball";
 
 	GamePanel gp;
 
@@ -14,7 +15,7 @@ public class OBJ_Fireball extends Projectile {
 		super(gp);
 		this.gp = gp;
 
-		name = "Fireball";
+		name = objName;
 		speed = 5;
 		maxLife = 80;
 		life = maxLife;

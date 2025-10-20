@@ -505,6 +505,7 @@ public class Player extends Entity {
 			defence = getDefence();
 			gp.playSE(8);
 			gp.gameState = gp.dialogueState;
+			setDialogue();
 			startDialogue(this, 0);
 		}
 	}
@@ -559,22 +560,24 @@ public class Player extends Entity {
 
 		boolean canObtain = false;
 
+		Entity newItem = gp.eGenerator.getObject(item.name);
+
 		// CHECK IF STACKABLE
-		if (item.stackable == true) {
-			int index = searchItemInInventory(item.name);
+		if (newItem.stackable == true) {
+			int index = searchItemInInventory(newItem.name);
 
 			if (index != 999) {
 				inventory.get(index).amount++;
 				canObtain = true;
 			} else {// NEW ITEM, NEED TO CHECK VACANCY
 				if (inventory.size() != maxInventorySize) {
-					inventory.add(item);
+					inventory.add(newItem);
 					canObtain = true;
 				}
 			}
 		} else {// NOT STACKABLE
 			if (inventory.size() != maxInventorySize) {
-				inventory.add(item);
+				inventory.add(newItem);
 				canObtain = true;
 			}
 		}

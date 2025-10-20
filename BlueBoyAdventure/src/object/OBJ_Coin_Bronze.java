@@ -5,6 +5,8 @@ import main.GamePanel;
 
 public class OBJ_Coin_Bronze extends Entity {
 
+	public static final String objName = "Bronze Coin";
+
 	GamePanel gp;
 	int value = 5;
 
@@ -15,7 +17,7 @@ public class OBJ_Coin_Bronze extends Entity {
 		this.gp = gp;
 
 		type = type_pickupOnly;
-		name = "Bronze Coin";
+		name = objName;
 		value = 1;
 		down1 = setup("/objects/coin_bronze");
 		description = "[ " + name + " ]\nHeals your life by " + value + ".";
