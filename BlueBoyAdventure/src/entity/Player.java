@@ -78,12 +78,17 @@ public class Player extends Entity {
 		getAttackImage();
 		getGuardImage();
 		setItems();
+		setDialogue();
 	}
 
 	public void setDefaultPositions() {
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
 		direction = "down";
+	}
+
+	public void setDialogue() {
+		dialogues[0][0] = "You are level " + level + " now!\n" + "you feel stronger!";
 	}
 
 	public void restoreStatus() {
@@ -411,7 +416,6 @@ public class Player extends Entity {
 		if (gp.keyH.enterPressed == true) {
 			if (i != 999) {
 				attackCanceled = true;
-				gp.gameState = gp.dialogueState;
 				gp.npc[gp.currentMap][i].speak();
 			}
 		}
@@ -501,7 +505,7 @@ public class Player extends Entity {
 			defence = getDefence();
 			gp.playSE(8);
 			gp.gameState = gp.dialogueState;
-			gp.ui.currentDialogue = "You are level " + level + " now!\n" + "you feel stronger!";
+			startDialogue(this, 0);
 		}
 	}
 
