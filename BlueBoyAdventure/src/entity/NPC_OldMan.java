@@ -20,6 +20,7 @@ public class NPC_OldMan extends Entity {
 		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 32;
 		solidArea.height = 32;
+		dialogueSet = -1;
 		getImage();
 		setDialogue();
 	}
@@ -37,10 +38,16 @@ public class NPC_OldMan extends Entity {
 	}
 
 	public void setDialogue() {
-		dialogues[0] = "Hello lad.";
-		dialogues[1] = "So you have come to this island \nto find some treasure?";
-		dialogues[2] = "I used to be a great wizard \nbut now.... \nI'm a bit too old \nfor taking an adventure.";
-		dialogues[3] = "Well good luck on you.";
+		dialogues[0][0] = "Hello lad.";
+		dialogues[0][1] = "So you have come to this island \nto find some treasure?";
+		dialogues[0][2] = "I used to be a great wizard \nbut now.... \nI'm a bit too old \nfor taking an adventure.";
+		dialogues[0][3] = "Well good luck on you.";
+
+		dialogues[1][0] = "If you get tired, rest at the water";
+		dialogues[1][1] = "However the monsters reappear if your rest.\nI don't know why but that's how it works";
+		dialogues[1][2] = "In any case don't push yourself too hard";
+
+		dialogues[2][0] = "I wonder how to open that door....";
 
 	}
 
@@ -82,8 +89,19 @@ public class NPC_OldMan extends Entity {
 
 	public void speak() {
 
-		super.speak();
-		onPath = true;
+		facePlayer();
+		startDialogue(this, dialogueSet);
+
+		dialogueSet++;
+		if (dialogues[dialogueSet][0] == null) {
+//			dialogueSet = 0;//Reset dialogue set
+			dialogueSet -= 1;// Display last set repeatedly
+		}
+
+		// Task specific set
+//		if(gp.player.life<gp.player.maxLife/3) {
+//			dialogueSet=1;
+//		}
 	}
 
 }
