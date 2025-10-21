@@ -123,7 +123,7 @@ public class SaveLoad {
 							if (ds.mapObjectLootNames[mapNum][i] != null) {
 								Entity loot = gp.eGenerator.getObject(ds.mapObjectLootNames[mapNum][i]);
 								if (loot != null) {
-									gp.obj[mapNum][i].loot = loot;
+									gp.obj[mapNum][i].setLoot(loot);
 								}
 							}
 							gp.obj[mapNum][i].opened = ds.mapObjectOpened[mapNum][i];
