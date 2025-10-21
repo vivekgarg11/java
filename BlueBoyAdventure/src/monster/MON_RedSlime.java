@@ -9,24 +9,24 @@ import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
 import object.OBJ_Rock;
 
-public class MON_GreenSlime extends Entity {
+public class MON_RedSlime extends Entity {
 
 	GamePanel gp;
 
-	public MON_GreenSlime(GamePanel gp) {
+	public MON_RedSlime(GamePanel gp) {
 		super(gp);
 
 		this.gp = gp;
 
 		type = type_monster;
-		name = "Green Slime";
-		defaultSpeed = 1;
+		name = "Red Slime";
+		defaultSpeed = 2;
 		speed = defaultSpeed;
-		maxLife = 4;
+		maxLife = 8;
 		life = maxLife;
-		attack = 2;
+		attack = 7;
 		defence = 0;
-		exp = 2;
+		exp = 5;
 		projectile = new OBJ_Rock(gp);
 
 		solidArea.x = 3;
@@ -41,14 +41,14 @@ public class MON_GreenSlime extends Entity {
 
 	public void getImage() {
 
-		up1 = setup("/monster/greenslime_down_1");
-		up2 = setup("/monster/greenslime_down_2");
-		down1 = setup("/monster/greenslime_down_1");
-		down2 = setup("/monster/greenslime_down_2");
-		left1 = setup("/monster/greenslime_down_1");
-		left2 = setup("/monster/greenslime_down_2");
-		right1 = setup("/monster/greenslime_down_1");
-		right2 = setup("/monster/greenslime_down_2");
+		up1 = setup("/monster/redslime_down_1");
+		up2 = setup("/monster/redslime_down_2");
+		down1 = setup("/monster/redslime_down_1");
+		down2 = setup("/monster/redslime_down_2");
+		left1 = setup("/monster/redslime_down_1");
+		left2 = setup("/monster/redslime_down_2");
+		right1 = setup("/monster/redslime_down_1");
+		right2 = setup("/monster/redslime_down_2");
 
 	}
 
@@ -66,6 +66,9 @@ public class MON_GreenSlime extends Entity {
 			// NPC follows player
 			// Search the direction to go
 			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
+
+			// Check if it shoots a projectile
+			checkShootOrNot(200, 30);
 		} else {
 			// Check if it starts chasing
 			checkStartChasingOrNot(gp.player, 5, 100);
