@@ -7,32 +7,30 @@ import main.GamePanel;
 import object.OBJ_Coin_Bronze;
 import object.OBJ_Heart;
 import object.OBJ_ManaCrystal;
-import object.OBJ_Rock;
 
-public class MON_RedSlime extends Entity {
+public class MON_Bat extends Entity {
 
 	GamePanel gp;
 
-	public MON_RedSlime(GamePanel gp) {
+	public MON_Bat(GamePanel gp) {
 		super(gp);
 
 		this.gp = gp;
 
 		type = type_monster;
-		name = "Red Slime";
-		defaultSpeed = 2;
+		name = "Bat";
+		defaultSpeed = 4;
 		speed = defaultSpeed;
-		maxLife = 8;
+		maxLife = 7;
 		life = maxLife;
 		attack = 7;
 		defence = 0;
-		exp = 5;
-		projectile = new OBJ_Rock(gp);
+		exp = 7;
 
 		solidArea.x = 3;
-		solidArea.y = 18;
+		solidArea.y = 15;
 		solidArea.width = 42;
-		solidArea.height = 30;
+		solidArea.height = 21;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 
@@ -41,14 +39,14 @@ public class MON_RedSlime extends Entity {
 
 	public void getImage() {
 
-		up1 = setup("/monster/redslime_down_1");
-		up2 = setup("/monster/redslime_down_2");
-		down1 = setup("/monster/redslime_down_1");
-		down2 = setup("/monster/redslime_down_2");
-		left1 = setup("/monster/redslime_down_1");
-		left2 = setup("/monster/redslime_down_2");
-		right1 = setup("/monster/redslime_down_1");
-		right2 = setup("/monster/redslime_down_2");
+		up1 = setup("/monster/bat_down_1");
+		up2 = setup("/monster/bat_down_2");
+		down1 = setup("/monster/bat_down_1");
+		down2 = setup("/monster/bat_down_2");
+		left1 = setup("/monster/bat_down_1");
+		left2 = setup("/monster/bat_down_2");
+		right1 = setup("/monster/bat_down_1");
+		right2 = setup("/monster/bat_down_2");
 
 	}
 
@@ -57,23 +55,20 @@ public class MON_RedSlime extends Entity {
 		if (onPath == true) {
 
 			// Check if it stops chasing
-			checkStopChasingOrNot(gp.player, 15, 100);
-
-			// Path to a certain Goal
-//			int goalCol = 12;
-//			int goalRow = 9;
-
-			// NPC follows player
-			// Search the direction to go
-			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
-
-			// Check if it shoots a projectile
-			checkShootOrNot(200, 30);
+//			checkStopChasingOrNot(gp.player, 15, 100);
+//
+//			// Path to a certain Goal
+////			int goalCol = 12;
+////			int goalRow = 9;
+//
+//			// NPC follows player
+//			// Search the direction to go
+//			searchPath(getGoalCol(gp.player), getGoalRow(gp.player));
 		} else {
 			// Check if it starts chasing
-			checkStartChasingOrNot(gp.player, 5, 100);
+//			checkStartChasingOrNot(gp.player, 5, 100);
 			// Get a random direction
-			getRandomDirection(120);
+			getRandomDirection(10);
 
 		}
 
@@ -82,7 +77,7 @@ public class MON_RedSlime extends Entity {
 	public void damageReaction() {
 		actionLockCounter = 0;
 //		direction = gp.player.direction;
-		onPath = true;
+//		onPath = true;
 	}
 
 	public void checkDrop() {
