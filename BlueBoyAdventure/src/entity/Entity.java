@@ -85,6 +85,7 @@ public class Entity {
 	public Entity currentShield;
 	public Entity currentLight;
 	public Projectile projectile;
+	public boolean boss;
 
 	// ITEM ATTRIBUTES
 	public ArrayList<Entity> inventory = new ArrayList<>();
@@ -116,6 +117,16 @@ public class Entity {
 
 	public Entity(GamePanel gp) {
 		this.gp = gp;
+	}
+
+	public int getScreenX() {
+		int screenX = worldX - gp.player.worldX + gp.player.screenX;
+		return screenX;
+	}
+
+	public int getScreenY() {
+		int screenY = worldY - gp.player.worldY + gp.player.screenY;
+		return screenY;
 	}
 
 	public int getLeftX() {
@@ -645,19 +656,26 @@ public class Entity {
 		target.knockBack = true;
 	}
 
-	public void draw(Graphics2D g2) {
-
-		BufferedImage image = null;
-		int screenX = worldX - gp.player.worldX + gp.player.screenX;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY;
+	public boolean inCamera() {
+		boolean inCamera = false;
 
 		if (worldX + gp.tileSize * 5 > gp.player.worldX - gp.player.screenX
 				&& worldX - gp.tileSize < gp.player.worldX + gp.player.screenX
 				&& worldY + gp.tileSize * 5 > gp.player.worldY - gp.player.screenY
 				&& worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+			inCamera = true;
+		}
+		return inCamera;
+	}
 
-			int tempScreenX = screenX;
-			int tempScreenY = screenY;
+	public void draw(Graphics2D g2) {
+
+		BufferedImage image = null;
+
+		if (inCamera() == true) {
+
+			int tempScreenX = getScreenX();
+			int tempScreenY = getScreenY();
 
 			switch (direction) {
 			case "up":
@@ -668,7 +686,7 @@ public class Entity {
 						image = up2;
 				}
 				if (attacking == true) {
-					tempScreenY = screenY - up1.getHeight();
+					tempScreenY = getScreenY() - up1.getHeight();
 					if (spriteNum == 1)
 						image = attackUp1;
 					if (spriteNum == 2)
@@ -697,7 +715,7 @@ public class Entity {
 						image = left2;
 				}
 				if (attacking == true) {
-					tempScreenX = screenX - left1.getWidth();
+					tempScreenX = getScreenX() - left1.getWidth();
 					if (spriteNum == 1)
 						image = attackLeft1;
 					if (spriteNum == 2)
@@ -718,25 +736,6 @@ public class Entity {
 						image = attackRight2;
 				}
 				break;
-			}
-			// Monster HP Bar
-			if (type == 2 && hpBarOn == true) {
-
-				double oneScale = (double) gp.tileSize / maxLife;
-				double hpBarValue = oneScale * life;
-
-				g2.setColor(new Color(35, 35, 35));
-				g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
-
-				g2.setColor(new Color(255, 0, 30));
-				g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
-
-				hpBarCounter++;
-
-				if (hpBarCounter > 600) {
-					hpBarCounter = 0;
-					hpBarOn = false;
-				}
 			}
 
 			if (invincible == true) {
