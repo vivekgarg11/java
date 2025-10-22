@@ -12,7 +12,7 @@ public class Main {
 		window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
-		window.setTitle("2D Adventure");
+		window.setTitle("Blue Boy Adventure");
 
 		GamePanel gamepanel = new GamePanel();
 		window.add(gamepanel);
