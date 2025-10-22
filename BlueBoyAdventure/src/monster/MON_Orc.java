@@ -88,7 +88,7 @@ public class MON_Orc extends Entity {
 			// Check if it starts chasing
 			checkStartChasingOrNot(gp.player, 5, 100);
 			// Get a random direction
-			getRandomDirection();
+			getRandomDirection(120);
 
 		}
 
